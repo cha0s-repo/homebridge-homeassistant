@@ -44,7 +44,7 @@ function HomeAssistantPlatform(log, config, api) {
     this.api = api;
   }
 
-  const es = new EventSource(`${config.host}/api/stream?api_password=${encodeURIComponent(this.password)}`);
+  const es = new EventSource(`${config.host}/api/stream?token=${encodeURIComponent(this.password)}`);
   es.addEventListener('message', (e) => {
     if (this.logging) {
       this.log(`Received event: ${e.data}`);
@@ -85,7 +85,7 @@ HomeAssistantPlatform.prototype = {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'x-ha-access': this.password,
+        'Authorization': `Bearer ${this.password}`,
       },
       rejectUnauthorized: this.verify_ssl,
     };

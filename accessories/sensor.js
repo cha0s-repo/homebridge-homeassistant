@@ -199,6 +199,9 @@ function HomeAssistantSensorFactory(log, data, client, firmware) {
       }
       return 0;
     };
+  }  else if (data.entity_id.includes('tds_out')) {
+    service = Service.AirQualitySensor;
+    characteristic = Characteristic.AirQuality;
   } else {
     return null;
   }
